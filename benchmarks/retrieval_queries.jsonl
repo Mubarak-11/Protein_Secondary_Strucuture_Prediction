@@ -1,0 +1,15 @@
+{"query": "human tumor suppressor involved in DNA damage response", "relevant_accessions": ["P04637"]}
+{"query": "insulin hormone glucose regulation", "relevant_accessions": ["P01308"]}
+{"query": "epidermal growth factor receptor kinase", "relevant_accessions": ["P00533"]}
+{"query": "human estrogen receptor nuclear hormone receptor", "relevant_accessions": ["P03372"]}
+{"query": "AKT kinase cell survival signaling", "relevant_accessions": ["P31749"]}
+{"query": "TP53", "relevant_accessions": ["P04637"]}
+{"query": "P04637", "relevant_accessions": ["P04637"]}
+{"query": "EGFR", "relevant_accessions": ["P00533"]}
+{"query": "BRCA1 DNA repair breast cancer", "relevant_accessions": ["P38398"]}
+{"query": "AKT1", "relevant_accessions": ["P31749"]}
+{"query": "ESR1 estrogen receptor", "relevant_accessions": ["P03372"]}
+{"query": "HBB beta globin hemoglobin", "relevant_accessions": ["P68871"]}
+{"query": "BRAF kinase MAPK pathway", "relevant_accessions": ["P15056"]}
+{"query": "mTOR kinase nutrient signaling", "relevant_accessions": ["P42345"]}
+{"query": "SRC proto oncogene tyrosine kinase", "relevant_accessions": ["P12931"]}

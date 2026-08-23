@@ -53,6 +53,8 @@ Thumbs.db
 
 # Environment files
 .env
+dataset/uniprot_seed_accessions.txt
+dataset/uniprot_seed_jsonl
 
 # ADK session database
 .adk/

@@ -1,0 +1,36 @@
+[project]
+name = "protein-struct-proj"
+version = "0.1.0"
+description = "Protein AI Research Assistant with secondary-structure prediction, UniProt tools, BigQuery MCP, and pgvector retrieval."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.133.0",
+    "uvicorn>=0.34.0",
+    "torch>=2.1.0",
+    "numpy>=1.24.0",
+    "pydantic>=2.5.0",
+    "requests>=2.31.0",
+    "google-adk>=2.2.0",
+    "google-cloud-bigquery>=3.25.0",
+    "mcp>=1.0.0",
+    "python-dotenv>=1.0.0",
+    "psycopg[binary]>=3.2.0",
+    "pgvector>=0.3.0",
+    "sentence-transformers>=3.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = [
+    "Protein_agent*",
+    "protein_bq_mcp_server*",
+    "protein_model*",
+    "protein_retrieval*",
+    "protein_retrieval_mcp_server*",
+    "scripts*",
+    "serving*",
+]
