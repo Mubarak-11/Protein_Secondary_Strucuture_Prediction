@@ -4,7 +4,14 @@ import logging
 from typing import Any
 
 import psycopg
+
+from protein_retrieval.runtime import configure_retrieval_runtime
+
+configure_retrieval_runtime()
+
 from sentence_transformers import SentenceTransformer
+
+from protein_retrieval.config import get_local_files_only
 
 logger = logging.getLogger(__name__)
 
@@ -26,9 +33,16 @@ WHERE accession = %(accession)s;
 """
 
 
-def load_model(model_name: str) -> SentenceTransformer:
-    logger.info("Loading embedding model: %s", model_name)
-    return SentenceTransformer(model_name)
+def load_model(model_name: str, local_files_only: bool | None = None) -> SentenceTransformer:
+    resolved_local_files_only = (
+        get_local_files_only() if local_files_only is None else local_files_only
+    )
+    logger.info(
+        "Loading embedding model: %s local_files_only=%s",
+        model_name,
+        resolved_local_files_only,
+    )
+    return SentenceTransformer(model_name, local_files_only=resolved_local_files_only)
 
 
 def embed_query(model: Any, query: str) -> list[float]:
@@ -64,4 +78,3 @@ def update_embedding(
             "embedding_model": embedding_model,
         },
     )
-

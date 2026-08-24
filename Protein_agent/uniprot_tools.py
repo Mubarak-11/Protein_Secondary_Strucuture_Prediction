@@ -5,6 +5,23 @@ import requests
 UNIPROT_BASE = "https://rest.uniprot.org/uniprotkb"
 
 
+def _uniprot_http_error(action: str, response: requests.Response) -> dict:
+    return {
+        "ok": False,
+        "error": (
+            f"UniProt {action} failed (HTTP {response.status_code}): "
+            "the requested information could not be verified."
+        ),
+    }
+
+
+def _uniprot_request_error(action: str, exc: requests.exceptions.RequestException) -> dict:
+    return {
+        "ok": False,
+        "error": f"UniProt {action} failed: {exc}",
+    }
+
+
 #Helper function to extract all text values
 def _get_comment_texts(entry: dict, comment_type: str) -> list[str]:
     """ Extract text values from Uniprot comments of a specific type """
@@ -75,8 +92,25 @@ def search_uniprot(query: str, max_results: int = 5) -> dict:
     """
     url = f"{UNIPROT_BASE}/search"
     params = {"query": query, "size": min(max_results, 10), "format": "json"}
-    resp = requests.get(url, params=params, timeout=15)
-    resp.raise_for_status()
+
+    try:
+        resp = requests.get(url, params=params, timeout=15)
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError:
+        return {
+            "query": query,
+            "results": [],
+            "total": 0,
+            **_uniprot_http_error("search", resp),
+        }
+    except requests.exceptions.RequestException as exc:
+        return {
+            "query": query,
+            "results": [],
+            "total": 0,
+            **_uniprot_request_error("search", exc),
+        }
+
     data = resp.json()
 
     results = []
@@ -93,7 +127,7 @@ def search_uniprot(query: str, max_results: int = 5) -> dict:
             "entry_type": entry.get("entryType", ""),
         })
 
-    return {"results": results, "total": data.get("total", 0)}
+    return {"ok": True, "results": results, "total": data.get("total", 0)}
 
 
 def get_uniprot_entry(accession: str) -> dict:
@@ -102,11 +136,25 @@ def get_uniprot_entry(accession: str) -> dict:
     Returns: protein name, gene, organism, length, function and GO terms (FPC: molecular function/Biological process/cellular component)
     """
     url = f"{UNIPROT_BASE}/{accession}?format=json"
-    resp = requests.get(url, timeout=15)
-    resp.raise_for_status()
+
+    try:
+        resp = requests.get(url, timeout=15)
+        resp.raise_for_status()
+    except requests.exceptions.HTTPError:
+        return {
+            "accession": accession,
+            **_uniprot_http_error("lookup", resp),
+        }
+    except requests.exceptions.RequestException as exc:
+        return {
+            "accession": accession,
+            **_uniprot_request_error("lookup", exc),
+        }
+
     entry = resp.json()
 
     return {
+        "ok": True,
         "accession": entry["primaryAccession"],
         "name": entry.get("uniProtkbId", ""),
         "protein_name": entry.get("proteinDescription", {}).get("recommendedName", {}).get("fullName", {}).get("value", ""),

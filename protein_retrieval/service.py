@@ -77,6 +77,27 @@ def get_embedding_model(model_name: str | None = None) -> Any:
     return model
 
 
+def warm_embedding_model(
+    model_name: str | None = None,
+    warmup_text: str = "protein retrieval warmup",
+) -> dict[str, Any]:
+    """Load the embedding model and run one small query embedding."""
+
+    from protein_retrieval.embeddings import embed_query
+
+    load_config()
+
+    resolved_model_name = model_name or get_embedding_model_name()
+    model = get_embedding_model(resolved_model_name)
+    embedding = embed_query(model, warmup_text)
+
+    return {
+        "embedding_model": resolved_model_name,
+        "warmup_text": warmup_text,
+        "embedding_dimensions": len(embedding),
+    }
+
+
 def _vector_rows_to_dicts(rows: list[tuple]) -> list[dict[str, Any]]:
     """ Format tuple rows from vector_search into JSON-friendly dicts. """
 

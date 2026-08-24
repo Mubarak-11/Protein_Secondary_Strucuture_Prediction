@@ -53,8 +53,11 @@ Thumbs.db
 
 # Environment files
 .env
-dataset/uniprot_seed_accessions.txt
 dataset/uniprot_seed_jsonl
+
+# Python generated files
+__pycache__/
+*.py[cod]
 
 # ADK session database
 .adk/

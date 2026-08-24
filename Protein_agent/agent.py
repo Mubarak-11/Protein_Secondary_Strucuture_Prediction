@@ -1,31 +1,49 @@
 import os
+import sys
 from google.adk.agents import Agent
 from google.adk.tools.mcp_tool import McpToolset, StdioConnectionParams
 from mcp.client.stdio import StdioServerParameters
+from .config import get_agent_model
 from .tools import predict_q3, predict_q8, batch_predict_q3, batch_predict_q8
 from .uniprot_tools import search_uniprot, get_uniprot_entry
 
+
 script_dir = os.path.dirname(os.path.abspath(__file__))
 instruction_file_path = os.path.join(script_dir, "agent-prompt.md")
+project_root = os.path.dirname(script_dir)
 
 with open(instruction_file_path, "r") as f:
     instruction = f.read()
 
-
-bq_toolset = McpToolset(
-    connection_params = StdioConnectionParams(
-        server_params = StdioServerParameters(
-            command = "python3",
-            args = ["-m", "protein_bq_mcp_server.server"],
+def _stdio_mcp_toolset(module: str) -> McpToolset:
+    """Create an MCP toolset that runs inside the active Python environment."""
+    return McpToolset(
+        connection_params=StdioConnectionParams(
+            server_params=StdioServerParameters(
+                command=sys.executable,
+                args=["-m", module],
+                cwd=project_root,
+            ),
         ),
-    ),
-)
+    )
 
+bq_toolset = _stdio_mcp_toolset("protein_bq_mcp_server.server")
+retrieval_toolset = _stdio_mcp_toolset("protein_retrieval_mcp_server.server")
+
+tools = [
+    predict_q3,
+    predict_q8,
+    batch_predict_q3,
+    batch_predict_q8,
+    search_uniprot,
+    get_uniprot_entry,
+    bq_toolset,
+    retrieval_toolset,
+]
 root_agent = Agent(
     name = "ProteinResearchAgent",
     description = "Protein Research Assistant that helps with Protein secondary structure from Amino Acids",
     instruction = instruction,
-#    model = "gemini-3.1-pro-preview",
-    model = "gemini-2.5-flash",
-    tools= [predict_q3, predict_q8, batch_predict_q3, batch_predict_q8, search_uniprot, get_uniprot_entry, bq_toolset],
+    model = get_agent_model(),
+    tools=tools,
 )

@@ -1,6 +1,7 @@
 """ Custom MCP server for exposing protein retrieval tools. """
 
 import logging
+import os
 import uuid
 
 from mcp.server.fastmcp import FastMCP
@@ -8,9 +9,37 @@ from typing import Annotated, Any
 from pydantic import Field
 
 from protein_retrieval.config import MIN_TOP_K, MAX_TOP_K
+from protein_retrieval.runtime import configure_retrieval_runtime
+
+configure_retrieval_runtime()
 
 #MCP server
 mcp = FastMCP("Protein Retrieval MCP server")
+
+
+def _env_flag(name: str, default: bool) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _warm_embedding_model_for_demo() -> None:
+    if not _env_flag("PROTEIN_RETRIEVAL_MCP_WARMUP", default=True):
+        return
+
+    try:
+        from protein_retrieval.service import warm_embedding_model
+
+        result = warm_embedding_model()
+        logging.info(
+            "Warmed retrieval embedding model: %s (%s dimensions)",
+            result["embedding_model"],
+            result["embedding_dimensions"],
+        )
+    except Exception:
+        logging.exception("Retrieval embedding warmup failed; MCP server will continue.")
 
 def _success(data: dict[str, Any]) -> dict[str, Any]:
     return {"ok": True, "data": data}
@@ -111,4 +140,5 @@ def hybrid_search_proteins(
     
 
 if __name__=="__main__":
+    _warm_embedding_model_for_demo()
     mcp.run(transport="stdio")

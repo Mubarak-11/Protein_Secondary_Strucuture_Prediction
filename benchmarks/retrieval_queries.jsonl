@@ -13,3 +13,88 @@
 {"query": "BRAF kinase MAPK pathway", "relevant_accessions": ["P15056"]}
 {"query": "mTOR kinase nutrient signaling", "relevant_accessions": ["P42345"]}
 {"query": "SRC proto oncogene tyrosine kinase", "relevant_accessions": ["P12931"]}
+{"query": "human DNA repair homologous recombination proteins", "relevant_accessions": ["Q06609", "P38398", "P51587"]}
+{"query": "xeroderma pigmentosum nucleotide excision repair human", "relevant_accessions": ["P23025", "P18074"]}
+{"query": "human DNA mismatch repair colorectal cancer proteins", "relevant_accessions": ["P40692", "P43246"]}
+{"query": "DNA damage checkpoint kinases ATM ATR CHK1 CHK2", "relevant_accessions": ["Q13315", "Q13535", "O14757", "O96017"]}
+{"query": "human Toll-like receptors pathogen recognition", "relevant_accessions": ["O00206", "O15455", "O60602", "O60603"]}
+{"query": "viral RNA sensing RIG-I MDA5 MAVS pathway", "relevant_accessions": ["O95786", "Q9BYX4", "Q7Z434"]}
+{"query": "STING TMEM173 cytosolic DNA sensing interferon", "relevant_accessions": ["Q86WV6"]}
+{"query": "NLRP3 inflammasome caspase 1 inflammatory activation", "relevant_accessions": ["Q96P20", "P29466"]}
+{"query": "executioner caspases apoptosis", "relevant_accessions": ["P42574", "P55210", "P55212"]}
+{"query": "initiator caspases extrinsic intrinsic apoptosis", "relevant_accessions": ["Q14790", "P55211", "Q92851"]}
+{"query": "anti-apoptotic BCL2 family proteins", "relevant_accessions": ["P10415", "Q07817", "Q07820"]}
+{"query": "pro-apoptotic BCL2 family mitochondrial death proteins", "relevant_accessions": ["Q07812", "Q92934", "P55957"]}
+{"query": "ERBB receptor tyrosine kinase family", "relevant_accessions": ["P00533", "P04626", "P21860", "Q15303"]}
+{"query": "human fibroblast growth factor receptors", "relevant_accessions": ["P11362", "P21802", "P22607", "P22455"]}
+{"query": "VEGF angiogenesis ligand and receptors", "relevant_accessions": ["P15692", "P17948", "P35968"]}
+{"query": "PI3K AKT mTOR PTEN growth signaling pathway", "relevant_accessions": ["P42336", "P31749", "P42345", "P60484"]}
+{"query": "MAP kinase ERK JNK p38 signaling proteins", "relevant_accessions": ["P28482", "P27361", "P45983", "Q16539"]}
+{"query": "NF-kappaB inflammatory signaling pathway proteins", "relevant_accessions": ["P19838", "Q04206", "P25963", "O14920"]}
+{"query": "TGF beta SMAD signaling mediators", "relevant_accessions": ["P01137", "Q15796", "P84022", "Q13485"]}
+{"query": "steroid hormone nuclear receptors estrogen androgen progesterone glucocorticoid", "relevant_accessions": ["P03372", "P06401", "P10275", "P04150"]}
+{"query": "PPAR nuclear receptors lipid metabolism", "relevant_accessions": ["Q07869", "P37231"]}
+{"query": "histone deacetylases chromatin repression", "relevant_accessions": ["Q13547", "Q92769", "O15379"]}
+{"query": "core histone nucleosome proteins", "relevant_accessions": ["P0C0S8", "P62805", "P68431", "P84243"]}
+{"query": "ubiquitin activating and conjugating enzymes", "relevant_accessions": ["P22314", "A0AVT1", "P61088", "P63279"]}
+{"query": "E3 ubiquitin ligases MDM2 Parkin FBXW7", "relevant_accessions": ["Q00987", "O60260", "Q969H0"]}
+{"query": "autophagy proteins ATG5 ATG7 Beclin 1", "relevant_accessions": ["Q9H1Y0", "O95352", "Q14457"]}
+{"query": "mitochondrial import TOM TIM translocase proteins", "relevant_accessions": ["O14925", "O96008", "Q15388"]}
+{"query": "human heat shock chaperone proteins HSP90 HSP60 BiP", "relevant_accessions": ["P07900", "P08238", "P10809", "P11021"]}
+{"query": "Escherichia coli chaperones GroEL DnaK", "relevant_accessions": ["P0A6F5", "P0A6Y8"]}
+{"query": "blood coagulation cascade vitamin K dependent factors", "relevant_accessions": ["P00734", "P00740", "P00742", "P08709"]}
+{"query": "fibrin clot fibrinogen chains", "relevant_accessions": ["P02671", "P02675", "P02679"]}
+{"query": "hemoglobin oxygen transport alpha beta subunits", "relevant_accessions": ["P68871", "P69905"]}
+{"query": "HLA class I antigen presentation molecules", "relevant_accessions": ["P04439", "P01889", "P10321"]}
+{"query": "SARS-CoV-2 structural proteins spike nucleoprotein", "relevant_accessions": ["P0DTC2", "P0DTC9"]}
+{"query": "mouse p53 tumor suppressor", "relevant_accessions": ["P02340"]}
+{"query": "yeast actin cytoskeleton ACT1", "relevant_accessions": ["P60010"]}
+{"query": "yeast alpha and beta tubulin microtubule proteins", "relevant_accessions": ["P09733", "P09734", "P02557"]}
+{"query": "yeast G1 cyclins CLN1 CLN2 CLN3", "relevant_accessions": ["P20437", "P20438", "P13365"]}
+{"query": "yeast mitotic cyclins CLB1 CLB2 CLB3 CLB4", "relevant_accessions": ["P24868", "P24869", "P24870", "P24871"]}
+{"query": "yeast DNA replication MCM helicase complex", "relevant_accessions": ["P29469", "P24279", "P30665", "P29496", "P53091", "P38132"]}
+{"query": "yeast origin recognition complex ORC subunits", "relevant_accessions": ["P54784", "P32833", "P54790", "P54791", "P50874", "P38826"]}
+{"query": "yeast DNA polymerase and replication factor A proteins", "relevant_accessions": ["P13382", "P21951", "P15436", "P22336", "P26754"]}
+{"query": "yeast homologous recombination RAD51 RAD52 RAD50 MRE11", "relevant_accessions": ["P25454", "P06778", "P12753", "P32829"]}
+{"query": "yeast GAL4 GCN4 transcription factors", "relevant_accessions": ["P04386", "P03069"]}
+{"query": "yeast heat shock chaperones HSP82 HSC82 SSA1 SSA2 HSP104", "relevant_accessions": ["P02829", "P15108", "P10591", "P10592", "P31539"]}
+{"query": "Arabidopsis photosystem II reaction center proteins", "relevant_accessions": ["P83755", "P56777", "P56778", "P56761"]}
+{"query": "Arabidopsis actin and tubulin cytoskeleton proteins", "relevant_accessions": ["Q96292", "P53492", "P11139", "B9DGT7", "Q56YW9", "P29514"]}
+{"query": "Arabidopsis FLS2 EFR BAK1 BRI1 receptor kinases", "relevant_accessions": ["Q9FL28", "C0LGT6", "Q94F62", "O22476"]}
+{"query": "Arabidopsis abscisic acid ABI drought response proteins", "relevant_accessions": ["P49597", "O04719", "Q01593", "Q9SJN0", "O82132"]}
+{"query": "Arabidopsis flowering genes FT CONSTANS LEAFY AG AP1", "relevant_accessions": ["Q9SXZ2", "Q39057", "Q00958", "P17839", "P35631"]}
+{"query": "E coli RNA polymerase core subunits and sigma factors", "relevant_accessions": ["P0A7Z4", "P0A8V2", "P0A8T7", "P00579", "P13445"]}
+{"query": "E coli DNA gyrase and replication initiation proteins", "relevant_accessions": ["P0AES4", "P0AES6", "P03004", "P0ACB0", "P0ABS5"]}
+{"query": "E coli mismatch repair UvrABC SOS response proteins", "relevant_accessions": ["P23909", "P23367", "P0A698", "P0A8F8", "P0A8G0", "P0A7C2"]}
+{"query": "E coli translation elongation factors", "relevant_accessions": ["P0CE47", "P0CE48", "P0A6M8", "P0A6P1"]}
+{"query": "Drosophila segmentation and patterning proteins", "relevant_accessions": ["P06602", "P02835", "P02836", "P09081"]}
+{"query": "Drosophila wingless hedgehog decapentaplegic Notch signaling", "relevant_accessions": ["P09615", "Q02936", "P07713", "P07207"]}
+{"query": "Drosophila apoptosis proteins hid grim reaper", "relevant_accessions": ["Q24106", "Q24570", "Q24475"]}
+{"query": "C elegans programmed cell death ced-3 ced-4 ced-9 egl-1", "relevant_accessions": ["P42573", "P30429", "P41958", "O61667"]}
+{"query": "C elegans insulin signaling daf-2 daf-16 age-1", "relevant_accessions": ["Q968Y9", "O16850", "Q94125"]}
+{"query": "C elegans Ras Notch MAPK development pathway", "relevant_accessions": ["Q03345", "P14585", "P13508", "P22981", "P39745"]}
+{"query": "zebrafish developmental signaling pax6 shh sox2 fgf8 vegf", "relevant_accessions": ["P26630", "Q92008", "Q6P0E1", "O57341", "O73682"]}
+{"query": "zebrafish p53 notch smoothened VEGF receptor", "relevant_accessions": ["P79734", "P46530", "Q5RH73", "Q5GIT4"]}
+{"query": "chicken albumin insulin glucagon hemoglobin metabolism", "relevant_accessions": ["P19121", "P67970", "P68259", "P02112"]}
+{"query": "HIV regulatory accessory proteins Tat Rev Nef Vif", "relevant_accessions": ["P04608", "P04618", "P04601", "P69723"]}
+{"query": "rice Rubisco and photosystem II chloroplast proteins", "relevant_accessions": ["Q0INY7", "P0C512", "P93431", "P0C434", "P0C364", "P0C367", "P0C437"]}
+{"query": "rice actin tubulin cytoskeleton proteins", "relevant_accessions": ["Q10DV7", "A3C6D7", "Q43594", "Q8H7U1"]}
+{"query": "rice drought DREB transcription factors", "relevant_accessions": ["Q64MA1", "Q3T5N4"]}
+{"query": "cross organism p53 tumor suppressor homologs", "relevant_accessions": ["P04637", "P02340", "P79734"]}
+{"query": "cross organism epidermal growth factor receptor homologs", "relevant_accessions": ["P00533", "P04412"]}
+{"query": "cross organism insulin hormone proteins", "relevant_accessions": ["P01308", "P67970"]}
+{"query": "actin proteins across human yeast plant fly worm rice chicken", "relevant_accessions": ["P60709", "P60010", "Q96292", "P10987", "P0DM41", "Q10DV7", "P60706"]}
+{"query": "heat shock protein 90 chaperones across organisms", "relevant_accessions": ["P07900", "P08238", "P02829", "P15108", "P02828", "Q90474"]}
+{"query": "RecA RAD51 homologous recombination proteins across species", "relevant_accessions": ["Q06609", "P25454", "P0A7G6"]}
+{"query": "Notch signaling proteins across human fly worm zebrafish", "relevant_accessions": ["P46531", "P07207", "P14585", "P13508", "P46530"]}
+{"query": "plant photosynthesis Rubisco and photosystem proteins", "relevant_accessions": ["O03042", "P10896", "P0C512", "Q0INY7", "P93431", "P83755"]}
+{"query": "apoptosis and programmed cell death proteins across animals", "relevant_accessions": ["P42574", "P42573", "Q24106", "Q24570", "Q24475"]}
+{"query": "Toll and Toll-like innate immune receptors", "relevant_accessions": ["O00206", "O60603", "O15455", "O60602"]}
+{"query": "HER2 ERBB2 breast cancer receptor target", "relevant_accessions": ["P04626"]}
+{"query": "imatinib Gleevec target ABL tyrosine kinase", "relevant_accessions": ["P00519"]}
+{"query": "CFTR cystic fibrosis chloride channel", "relevant_accessions": ["P13569"]}
+{"query": "human nitrogenase enzyme", "relevant_accessions": []}
+{"query": "yeast hemoglobin oxygen transport protein", "relevant_accessions": []}
+{"query": "Arabidopsis antibody immunoglobulin heavy chain", "relevant_accessions": []}
+{"query": "E coli estrogen receptor nuclear hormone receptor", "relevant_accessions": []}
+{"query": "HIV photosystem II reaction center protein", "relevant_accessions": []}

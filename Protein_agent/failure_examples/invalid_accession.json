@@ -1,0 +1,11 @@
+{
+  "scenario": "invalid_accession",
+  "prompt": "Summarize UniProt accession NOT_A_REAL_ACCESSION.",
+  "response": "I could not retrieve any information for \"NOT_A_REAL_ACCESSION\". \n\n**Uncertainty and Missing Information**\nThe provided accession is invalid and the lookup failed (HTTP 400). As a result, this entry could not be verified in the UniProt database, and all biological annotations are missing, including:\n* Protein identity and name\n* Gene name\n* Organism\n* Sequence and sequence length\n* Function annotations, GO terms, and keywords\n\nIf you have a valid UniProt accession, gene symbol, or protein name you would like me to investigate, please let me know and I will be happy to search for it!",
+  "error": null,
+  "tools_used": [
+    "get_uniprot_entry"
+  ],
+  "duration_s": 12.7,
+  "verdict": "ok"
+}

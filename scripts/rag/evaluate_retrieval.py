@@ -106,6 +106,7 @@ def main() -> None:
     )
 
     metrics_by_method = {"vector": [], "keyword": [], "hybrid": []}
+    skipped_negative_count = 0
 
     with connect(get_database_url()) as conn:
         for example in benchmark:
@@ -136,17 +137,23 @@ def main() -> None:
             keyword_accessions = accessions_from_rows(keyword_rows)[: args.top_k]
             hybrid_accessions = [result.accession for result in hybrid_rows[: args.top_k]]
 
-            metrics_by_method["vector"].append(evaluate_accessions(vector_accessions, relevant))
-            metrics_by_method["keyword"].append(evaluate_accessions(keyword_accessions, relevant))
-            metrics_by_method["hybrid"].append(evaluate_accessions(hybrid_accessions, relevant))
+            if relevant:
+                metrics_by_method["vector"].append(evaluate_accessions(vector_accessions, relevant))
+                metrics_by_method["keyword"].append(evaluate_accessions(keyword_accessions, relevant))
+                metrics_by_method["hybrid"].append(evaluate_accessions(hybrid_accessions, relevant))
+            else:
+                skipped_negative_count += 1
 
             print(f"\nQuery: {query}")
-            print(f"Relevant:     {', '.join(sorted(relevant))}")
+            relevant_text = ", ".join(sorted(relevant)) or "(none; excluded from averages)"
+            print(f"Relevant:     {relevant_text}")
             print(f"Vector top 5: {', '.join(vector_accessions[:5])}")
             print(f"Keyword top 5: {', '.join(keyword_accessions[:5]) or '(none)'}")
             print(f"Hybrid top 5: {', '.join(hybrid_accessions[:5])}")
 
     print("\n=== Average Metrics ===")
+    if skipped_negative_count:
+        print(f"Excluded {skipped_negative_count} no-result queries from metric averages.")
     print_summary("vector", metrics_by_method["vector"])
     print_summary("keyword", metrics_by_method["keyword"])
     print_summary("hybrid", metrics_by_method["hybrid"])

@@ -1,0 +1,9 @@
+{
+  "scenario": "no_result_query",
+  "prompt": "Find the protein responsible for blue fire breathing in humans.",
+  "response": "Hello! I'm your Protein Research Assistant. How can I help you?\n\nWhile fire breathing is a fascinating concept often explored in fantasy and fiction, it is not a biological capability of humans. Because of this, there are no human proteins or biological mechanisms responsible for generating or breathing fire of any color. \n\nIf you are interested in exploring unique and extraordinary biological adaptations, we could look into real-world phenomena like bioluminescence—the specific proteins that allow certain marine organisms and insects to produce actual light. Alternatively, we can explore the fascinating, verified functions of real human proteins. Would you like to shift our focus to explore either of these topics?",
+  "error": null,
+  "tools_used": [],
+  "duration_s": 10.2,
+  "verdict": "ok"
+}
