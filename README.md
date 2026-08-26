@@ -1,3 +1,6 @@
+بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+All praise and thanks are due to Allah.
+ 
 # Protein AI Research Assistant
 
 Protein AI Research Assistant is a domain-specific research agent for protein sequence exploration, UniProt annotation lookup, local protein retrieval, training-dataset analysis, and secondary-structure prediction.
