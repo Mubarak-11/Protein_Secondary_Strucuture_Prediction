@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 
 
-DEFAULT_AGENT_MODEL = "gemini-3.1-pro-preview"
+DEFAULT_AGENT_MODEL = "gemini-2.5-flash"
 AGENT_MODEL_ENV_VAR = "PROTEIN_AGENT_MODEL"
 
 

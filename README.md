@@ -3,7 +3,7 @@ All praise and thanks are due to Allah.
  
 # Protein AI Research Assistant
 
-Protein AI Research Assistant is a domain-specific research agent for protein sequence exploration, UniProt annotation lookup, local protein retrieval, training-dataset analysis, and secondary-structure prediction.
+Protein AI Research Assistant is a domain-specific research agent for protein sequence exploration, UniProt annotation lookup, local protein retrieval, training-dataset analysis, secondary-structure prediction, and 3D structure-view handoff.
 
 The project started as a PyTorch LSTM system for Q3/Q8 secondary-structure prediction. It is now a retrieval-grounded agent workflow that can:
 
@@ -11,6 +11,7 @@ The project started as a PyTorch LSTM system for Q3/Q8 secondary-structure predi
 - verify selected accessions through UniProt,
 - compare proteins against the training dataset through BigQuery,
 - run local Q3/Q8 structure prediction when the sequence is within model limits,
+- resolve experimental PDB structures and generate Protein Structure Studio viewer links,
 - produce answers that separate verified facts, interpretation, uncertainty, and missing information.
 
 This is not a general autonomous scientist. It is a focused protein research assistant built to demonstrate reliable, tool-grounded biological workflows.
@@ -35,6 +36,7 @@ This is not a general autonomous scientist. It is a focused protein research ass
 - [Repository Layout](#repository-layout)
 - [Limitations](#limitations)
 - [Why Not Scale To Thousands Yet?](#why-not-scale-to-thousands-yet)
+- [Structure Studio Handoff](#structure-studio-handoff)
 - [Post-V1 Direction](#post-v1-direction)
 - [License](#license)
 
@@ -59,7 +61,8 @@ The assistant currently supports:
 - Q8 secondary-structure prediction,
 - batch Q3/Q8 prediction,
 - read-only BigQuery analysis of the secondary-structure training dataset,
-- multi-step workflows combining retrieval, UniProt lookup, dataset comparison, and prediction.
+- PDB-backed structure-view link generation for Protein Structure Studio,
+- multi-step workflows combining retrieval, UniProt lookup, dataset comparison, prediction, and 3D visualization handoff.
 
 Example workflow:
 
@@ -69,7 +72,8 @@ Example workflow:
 4. Agent verifies the selected protein in UniProt.
 5. Agent compares sequence length or sequence presence against the training dataset.
 6. Agent predicts Q3/Q8 only if the sequence is valid and no longer than 512 residues.
-7. Agent returns a final answer with verified facts, interpretation, uncertainty, and missing information.
+7. Agent resolves an experimental PDB structure when available.
+8. Agent returns a final answer with verified facts, interpretation, uncertainty, missing information, and a Structure Studio link.
 
 ## Architecture
 
@@ -81,12 +85,15 @@ flowchart TD
     PT --> Q3["predict_q3 / predict_q8"]
     PT --> BQ3["batch_predict_q3 / batch_predict_q8"]
     PT --> UNI["search_uniprot / get_uniprot_entry"]
+    PT --> VIEW["create_structure_view_link"]
 
     Q3 --> INF["Local PyTorch Inference"]
     BQ3 --> INF
     INF --> ART["Model Artifacts<br/>serving/artifacts"]
 
     UNI --> UR["UniProt REST API"]
+    VIEW --> PDB["RCSB PDB metadata<br/>via UniProt cross-references"]
+    VIEW --> STUDIO["Protein Structure Studio<br/>local HTML + WebGL/NGL"]
 
     A --> RMCP["Retrieval MCP Toolset"]
     RMCP --> RS["protein_retrieval_mcp_server"]
@@ -106,10 +113,11 @@ flowchart TD
 
 Core packages:
 
-- `Protein_agent/`: ADK agent, prompt, prediction tools, UniProt tools, reliability contract.
+- `Protein_agent/`: ADK agent, prompt, prediction tools, UniProt tools, structure-view tool, reliability contract.
 - `protein_retrieval/`: reusable retrieval config, DB access, embeddings, search, service, UniProt normalization.
 - `protein_retrieval_mcp_server/`: MCP server exposing semantic, keyword, and hybrid retrieval tools.
 - `protein_bq_mcp_server/`: MCP server exposing guarded read-only BigQuery tools.
+- `protein_structure_view/`: reusable payload, PDB cross-reference parsing, and Structure Studio URL generation.
 - `serving/`: FastAPI prediction service.
 - `protein_model/`: model and preprocessing utilities.
 - `scripts/rag/`: thin wrappers for fetch, ingest, embed, search, warmup, and evaluation.
@@ -459,7 +467,8 @@ Current test coverage includes:
 - retrieval MCP success/error envelopes,
 - retrieval top-k clamping,
 - runtime hardening defaults,
-- UniProt graceful failure behavior.
+- UniProt graceful failure behavior,
+- Structure Studio payload encoding and agent tool behavior.
 
 ## Repository Layout
 
@@ -470,6 +479,7 @@ protein_struct_proj/
 │   ├── agent-prompt.md
 │   ├── config.py
 │   ├── reliability.py
+│   ├── structure_tools.py
 │   ├── tools.py
 │   ├── uniprot_tools.py
 │   └── schemas.py
@@ -489,6 +499,12 @@ protein_struct_proj/
 │   └── uniprot.py
 ├── protein_retrieval_mcp_server/
 │   └── server.py
+├── protein_structure_view/
+│   ├── links.py
+│   ├── models.py
+│   ├── payload.py
+│   ├── pdb_mapping.py
+│   └── uniprot.py
 ├── protein_model/
 ├── scripts/
 │   ├── rag/
@@ -509,6 +525,7 @@ protein_struct_proj/
 - Q3/Q8 prediction is limited to sequences up to 512 residues.
 - Prediction confidence is a model confidence score, not a calibrated probability of biological correctness.
 - The sequence model can miss tertiary, quaternary, ligand-binding, and membrane-context effects.
+- Structure visualization depends on an available PDB mapping and the local Protein Structure Studio server.
 - BigQuery MCP guardrails are for local/demo use and are not a complete public security boundary.
 
 ## Why Not Scale To Thousands Yet?
@@ -525,9 +542,29 @@ The value of this stage is reliability:
 
 Scaling to thousands is a future data-engineering task, not necessary for proving the V1 research-agent loop.
 
-## Post-V1 Direction
+## Structure Studio Handoff
 
-The next planned milestone is an agent-to-structure viewer workflow. The agent will emit a structured payload such as:
+The final capstone connects the research agent to a separate visualization repo:
+Protein Structure Studio.
+
+The separation is intentional:
+
+- the protein agent owns retrieval, UniProt verification, Q3/Q8 prediction, tool orchestration, evidence, and uncertainty,
+- Protein Structure Studio owns HTML, WebGL, NGL Viewer rendering, camera controls, molecular surfaces, ligands, and interaction.
+
+For the local demo, run the Structure Studio server separately:
+
+```bash
+python3 -m http.server 8765 --directory outputs
+```
+
+The agent emits a local viewer URL such as:
+
+```text
+http://127.0.0.1:8765/protein-sculpture-studio.html?payload=<base64url-json>
+```
+
+The encoded payload contains:
 
 ```json
 {
@@ -541,7 +578,16 @@ The next planned milestone is an agent-to-structure viewer workflow. The agent w
 }
 ```
 
-That will connect the research agent to a 3D protein viewer after V1 is tagged.
+The finale demo uses human hemoglobin beta: the agent verifies UniProt accession
+P68871, runs local Q3 prediction, explains oxygen-transport structure/function
+context, selects a PDB structure, and hands the user into the interactive 3D
+viewer.
+
+## Post-V1 Direction
+
+Future work can deepen the structure handoff with RCSB-native ranking,
+AlphaFold fallback, mutation overlays, contact maps, comparison views, and
+domain annotations while keeping the agent and visualization repos separate.
 
 ## License
 

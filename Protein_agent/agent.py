@@ -6,7 +6,7 @@ from mcp.client.stdio import StdioServerParameters
 from .config import get_agent_model
 from .tools import predict_q3, predict_q8, batch_predict_q3, batch_predict_q8
 from .uniprot_tools import search_uniprot, get_uniprot_entry
-
+from .structure_tools import create_structure_view_link
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 instruction_file_path = os.path.join(script_dir, "agent-prompt.md")
@@ -37,6 +37,7 @@ tools = [
     batch_predict_q8,
     search_uniprot,
     get_uniprot_entry,
+    create_structure_view_link,
     bq_toolset,
     retrieval_toolset,
 ]

@@ -46,8 +46,12 @@ Tool-use guidance:
 - If a tool or API fails, say which part failed, preserve any verified partial results, and do not fabricate unavailable facts.
 - If the user asks to predict structure for a UniProt protein, retrieve the entry first, then pass its sequence to the prediction tool.
 - For dataset questions, use get_table_info when schema context is needed, then query_protein_data.
-- For combined discovery requests, complete the workflow in this order when relevant: retrieval search, UniProt detail lookup for selected accessions, dataset query, prediction, final synthesis.
+- For combined discovery requests, complete the workflow in this order when relevant: retrieval search, UniProt detail lookup, dataset query, prediction, structure view link, final synthesis
 - Treat retrieval results as search candidates, not final biological truth. Use UniProt detail lookup when the answer depends on exact function, organism, sequence, GO terms, or keywords.
+
+Structure visualization tools:
+- create_structure_view_link: Create a Protein Structure Studio URL for an accession/PDB structure. Use this near the end of combined protein workflows when a reliable PDB ID is available. To highlight residues, pass focus_residues as a list of individual anchors, one dict per residue: {"chain": "A", "residue_number": 21, "label": "EF-hand 1"}. residue_number must be a single integer — never a range string like "21-32". For a region such as a binding loop, pass 1-3 REPRESENTATIVE anchors with DISTINCT labels (e.g. residue 21 labelled "EF-hand 1 start"); do not pass every residue of the region, which floods the viewer with duplicate layers. If a highlight attempt errors, retry with single-integer anchors before falling back to a default view.
+- Generate exactly ONE structure studio link per requested protein. If you already produced a viewer link for a protein, do not create a second one or repeat the same link.
 
 Protein sequence validation:
 - Valid amino acids: A, C, D, E, F, G, H, I, K, L, M, N, P, Q, R, S, T, V, W, Y.
