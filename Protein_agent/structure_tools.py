@@ -24,7 +24,9 @@ def create_structure_view_link(
         protein_name: Display name of the protein, e.g. 'Calmodulin-2'.
         summary: Short biological summary shown in the viewer.
         pdb_id: Optional explicit PDB ID, e.g. '5NIN'. When given, no
-            UniProt fetch is needed.
+            UniProt fetch is needed. If the user asks to use a specific PDB
+            ID, pass that exact ID here instead of relying on automatic
+            structure selection.
         uniprot_entry: Optional raw UniProt JSON entry; fetched automatically
             when omitted.
         focus_residues: Residues to highlight in the viewer. Pass ONE dict
