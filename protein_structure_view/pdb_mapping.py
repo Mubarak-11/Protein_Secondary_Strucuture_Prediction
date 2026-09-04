@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Any
 
 from .models import StructureCandidate
 
 
 PREFERRED_STRUCTURE_BY_ACCESSION = {
-    "P68871": "2HHB",  # Human hemoglobin subunit beta
-    "P69905": "2HHB",  # Human hemoglobin subunit alpha
+    # Human hemoglobin subunits are best visualized in the full alpha/beta
+    # tetramer, even when UniProt maps one accession to only its subunit chains.
+    "P68871": {"pdb_id": "2HHB", "display_chains": ["A", "B", "C", "D"]},
+    "P69905": {"pdb_id": "2HHB", "display_chains": ["A", "B", "C", "D"]},
 }
 
 
@@ -39,10 +42,14 @@ def choose_best_structure(
     if not candidates:
         return None
 
-    preferred_pdb_id = PREFERRED_STRUCTURE_BY_ACCESSION.get(str(uniprot_id or "").upper())
-    if preferred_pdb_id:
+    preferred = PREFERRED_STRUCTURE_BY_ACCESSION.get(str(uniprot_id or "").upper())
+    if preferred:
+        preferred_pdb_id = preferred["pdb_id"]
         for candidate in candidates:
             if candidate.pdb_id == preferred_pdb_id:
+                display_chains = preferred.get("display_chains")
+                if display_chains:
+                    return replace(candidate, chains=list(display_chains))
                 return candidate
 
     def sort_key(candidate: StructureCandidate) -> tuple[int, float, str]:

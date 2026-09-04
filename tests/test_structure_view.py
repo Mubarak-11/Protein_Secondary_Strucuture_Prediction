@@ -148,6 +148,7 @@ class StructureCandidateMappingTests(unittest.TestCase):
 
         self.assertIsNotNone(best)
         self.assertEqual("2HHB", best.pdb_id)
+        self.assertEqual(["A", "B", "C", "D"], best.chains)
 
 
 if __name__ == "__main__":
