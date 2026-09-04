@@ -134,6 +134,21 @@ class StructureCandidateMappingTests(unittest.TestCase):
         self.assertIsNotNone(best)
         self.assertEqual("1AAA", best.pdb_id)
 
+    def test_choose_best_structure_prefers_representative_hemoglobin_structure(self) -> None:
+        candidates = parse_pdb_crossrefs(
+            {
+                "pdb_crossrefs": [
+                    {"pdb_id": "2W72", "method": "X-ray", "resolution": 1.07, "chains": ["B", "D"]},
+                    {"pdb_id": "2HHB", "method": "X-ray", "resolution": 1.74, "chains": ["A", "B", "C", "D"]},
+                ]
+            }
+        )
+
+        best = choose_best_structure(candidates, uniprot_id="P68871")
+
+        self.assertIsNotNone(best)
+        self.assertEqual("2HHB", best.pdb_id)
+
 
 if __name__ == "__main__":
     unittest.main()

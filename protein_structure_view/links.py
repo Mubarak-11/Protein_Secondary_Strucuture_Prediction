@@ -51,7 +51,11 @@ def create_structure_view(
     uncertainty: list[str] = []
     candidates = parse_pdb_crossrefs(uniprot_entry or {})
 
-    selected = _explicit_candidate(pdb_id, candidates) if pdb_id else choose_best_structure(candidates)
+    selected = (
+        _explicit_candidate(pdb_id, candidates)
+        if pdb_id
+        else choose_best_structure(candidates, uniprot_id=uniprot_id)
+    )
     if selected is None:
         raise ValueError("No PDB structure candidate was available for this protein.")
 

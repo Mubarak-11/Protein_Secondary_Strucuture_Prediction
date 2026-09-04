@@ -7,6 +7,12 @@ from typing import Any
 from .models import StructureCandidate
 
 
+PREFERRED_STRUCTURE_BY_ACCESSION = {
+    "P68871": "2HHB",  # Human hemoglobin subunit beta
+    "P69905": "2HHB",  # Human hemoglobin subunit alpha
+}
+
+
 def parse_pdb_crossrefs(entry: dict[str, Any]) -> list[StructureCandidate]:
     """Extract PDB candidates from a UniProt entry or agent-normalized entry."""
 
@@ -23,11 +29,21 @@ def parse_pdb_crossrefs(entry: dict[str, Any]) -> list[StructureCandidate]:
     return [candidate for candidate in candidates if candidate.pdb_id]
 
 
-def choose_best_structure(candidates: list[StructureCandidate]) -> StructureCandidate | None:
-    """Choose a demo-friendly structure using method and resolution when available."""
+def choose_best_structure(
+    candidates: list[StructureCandidate],
+    *,
+    uniprot_id: str | None = None,
+) -> StructureCandidate | None:
+    """Choose a representative structure, falling back to method/resolution ranking."""
 
     if not candidates:
         return None
+
+    preferred_pdb_id = PREFERRED_STRUCTURE_BY_ACCESSION.get(str(uniprot_id or "").upper())
+    if preferred_pdb_id:
+        for candidate in candidates:
+            if candidate.pdb_id == preferred_pdb_id:
+                return candidate
 
     def sort_key(candidate: StructureCandidate) -> tuple[int, float, str]:
         method = candidate.method.lower()
